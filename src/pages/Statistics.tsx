@@ -1,4 +1,3 @@
-
 import { useAuth } from '@/contexts/AuthContext';
 import { useBudget } from '@/contexts/BudgetContext';
 import { Button } from '@/components/ui/button';
@@ -17,6 +16,7 @@ import {
   BarChart,
   Bar,
   PieChart as RechartsPieChart,
+  Pie,
   Cell,
   XAxis,
   YAxis,
@@ -268,7 +268,7 @@ const Statistics = () => {
                   <ChartContainer config={categoryChartConfig} className="h-80">
                     <ResponsiveContainer width="100%" height="100%">
                       <RechartsPieChart>
-                        <pie
+                        <Pie
                           data={categoryData}
                           cx="50%"
                           cy="50%"
@@ -279,7 +279,7 @@ const Statistics = () => {
                           {categoryData.map((entry, index) => (
                             <Cell key={`cell-${index}`} fill={entry.fill} />
                           ))}
-                        </pie>
+                        </Pie>
                         <ChartTooltip 
                           content={({ active, payload }) => {
                             if (active && payload && payload.length) {
