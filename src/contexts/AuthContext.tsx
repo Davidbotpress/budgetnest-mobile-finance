@@ -93,6 +93,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       
       setUser(mockUser);
       localStorage.setItem('budgetnest_user', JSON.stringify(mockUser));
+      localStorage.setItem('budgetnest_is_new_user', 'true'); // Flag for new users
       
       toast({
         title: "¡Cuenta creada!",
