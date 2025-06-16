@@ -1,7 +1,7 @@
 
 import { useBudget } from '@/contexts/BudgetContext';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import StatisticsHeader from '@/components/statistics/StatisticsHeader';
+import { AppLayout } from '@/components/layout/AppLayout';
 import MetricsCards from '@/components/statistics/MetricsCards';
 import TrendsChart from '@/components/statistics/TrendsChart';
 import CategoriesChart from '@/components/statistics/CategoriesChart';
@@ -32,11 +32,8 @@ const Statistics = () => {
   const percentageChange = totalLastMonth > 0 ? ((totalSpent - totalLastMonth) / totalLastMonth) * 100 : 0;
 
   return (
-    <div className="min-h-screen bg-budget-gray-50">
-      <StatisticsHeader />
-
-      {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <AppLayout title="Estadísticas">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
           <h2 className="text-3xl font-bold text-primary mb-2">Estadísticas</h2>
           <p className="text-budget-gray-600">
@@ -72,8 +69,8 @@ const Statistics = () => {
             <OverspendingSection overspendingCategories={overspendingCategories} />
           </TabsContent>
         </Tabs>
-      </main>
-    </div>
+      </div>
+    </AppLayout>
   );
 };
 
