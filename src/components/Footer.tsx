@@ -7,30 +7,30 @@ const Footer = () => {
           <div className="col-span-1 md:col-span-2">
             <h3 className="text-2xl font-bold mb-4">BudgetNest</h3>
             <p className="text-gray-300 mb-4 max-w-md">
-              Smart budget tracking made simple for international students and budget-conscious individuals.
+              Seguimiento inteligente de presupuesto hecho simple para estudiantes internacionales y personas conscientes del presupuesto.
             </p>
             <p className="text-sm text-gray-400">
-              © 2024 BudgetNest. All rights reserved.
+              © 2024 BudgetNest. Todos los derechos reservados.
             </p>
           </div>
           
           <div>
-            <h4 className="font-semibold mb-4">Product</h4>
+            <h4 className="font-semibold mb-4">Producto</h4>
             <ul className="space-y-2 text-sm text-gray-300">
-              <li><a href="#" className="hover:text-white transition-colors">Features</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Pricing</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Funciones</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Precios</a></li>
               <li><a href="#" className="hover:text-white transition-colors">FAQ</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Support</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Soporte</a></li>
             </ul>
           </div>
           
           <div>
-            <h4 className="font-semibold mb-4">Company</h4>
+            <h4 className="font-semibold mb-4">Empresa</h4>
             <ul className="space-y-2 text-sm text-gray-300">
-              <li><a href="#" className="hover:text-white transition-colors">About</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Acerca de</a></li>
               <li><a href="#" className="hover:text-white transition-colors">Blog</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Privacy</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Terms</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Privacidad</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Términos</a></li>
             </ul>
           </div>
         </div>

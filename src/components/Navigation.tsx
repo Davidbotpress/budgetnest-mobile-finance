@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Menu, X } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -21,17 +22,21 @@ const Navigation = () => {
           <div className="hidden md:block">
             <div className="ml-10 flex items-center space-x-4">
               <Button variant="ghost" className="text-budget-gray-600 hover:text-primary">
-                Features
+                Funciones
               </Button>
               <Button variant="ghost" className="text-budget-gray-600 hover:text-primary">
-                About
+                Acerca de
               </Button>
-              <Button variant="outline" className="border-primary text-primary hover:bg-primary hover:text-white">
-                Log In
-              </Button>
-              <Button className="bg-primary hover:bg-primary/90 text-white">
-                Get Started
-              </Button>
+              <Link to="/auth">
+                <Button variant="outline" className="border-primary text-primary hover:bg-primary hover:text-white">
+                  Iniciar Sesión
+                </Button>
+              </Link>
+              <Link to="/auth">
+                <Button className="bg-primary hover:bg-primary/90 text-white">
+                  Comenzar
+                </Button>
+              </Link>
             </div>
           </div>
 
@@ -54,18 +59,22 @@ const Navigation = () => {
         <div className="md:hidden">
           <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-gray-100">
             <Button variant="ghost" className="w-full justify-start text-budget-gray-600 hover:text-primary">
-              Features
+              Funciones
             </Button>
             <Button variant="ghost" className="w-full justify-start text-budget-gray-600 hover:text-primary">
-              About
+              Acerca de
             </Button>
             <div className="pt-4 border-t border-gray-100 mt-4">
-              <Button variant="outline" className="w-full mb-2 border-primary text-primary hover:bg-primary hover:text-white">
-                Log In
-              </Button>
-              <Button className="w-full bg-primary hover:bg-primary/90 text-white">
-                Get Started
-              </Button>
+              <Link to="/auth" className="block mb-2">
+                <Button variant="outline" className="w-full border-primary text-primary hover:bg-primary hover:text-white">
+                  Iniciar Sesión
+                </Button>
+              </Link>
+              <Link to="/auth" className="block">
+                <Button className="w-full bg-primary hover:bg-primary/90 text-white">
+                  Comenzar
+                </Button>
+              </Link>
             </div>
           </div>
         </div>

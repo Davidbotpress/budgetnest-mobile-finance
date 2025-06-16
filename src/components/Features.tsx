@@ -6,26 +6,26 @@ const Features = () => {
   const features = [
     {
       icon: CircleDollarSign,
-      title: "Smart Budget Tracking",
-      description: "Set monthly budgets by category and track your spending in real-time with visual progress indicators.",
+      title: "Seguimiento Inteligente",
+      description: "Establece presupuestos mensuales por categoría y sigue tus gastos en tiempo real con indicadores visuales de progreso.",
       delay: "0s"
     },
     {
       icon: FileText,
-      title: "Expense Logging",
-      description: "Quickly log expenses with our intuitive interface. Edit, delete, and categorize transactions effortlessly.",
+      title: "Registro de Gastos",
+      description: "Registra gastos rápidamente con nuestra interfaz intuitiva. Edita, elimina y categoriza transacciones sin esfuerzo.",
       delay: "0.1s"
     },
     {
       icon: Settings,
-      title: "Detailed Analytics",
-      description: "Get insights into your spending patterns with beautiful charts and identify areas for improvement.",
+      title: "Análisis Detallado",
+      description: "Obtén insights sobre tus patrones de gasto con gráficos hermosos e identifica áreas de mejora.",
       delay: "0.2s"
     },
     {
       icon: User,
-      title: "Student-Focused",
-      description: "Designed specifically for international students and young professionals managing monthly allowances.",
+      title: "Enfoque Estudiantil",
+      description: "Diseñado específicamente para estudiantes internacionales y jóvenes profesionales que manejan asignaciones mensuales.",
       delay: "0.3s"
     }
   ];
@@ -35,11 +35,11 @@ const Features = () => {
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl font-bold text-primary mb-4">
-            Everything You Need to
-            <span className="text-gradient block">Manage Your Budget</span>
+            Todo lo que Necesitas para
+            <span className="text-gradient block">Gestionar tu Presupuesto</span>
           </h2>
           <p className="text-xl text-budget-gray-600 max-w-2xl mx-auto">
-            BudgetNest provides all the tools you need to take control of your finances and build healthy spending habits.
+            BudgetNest proporciona todas las herramientas que necesitas para tomar control de tus finanzas y construir hábitos de gasto saludables.
           </p>
         </div>
 
