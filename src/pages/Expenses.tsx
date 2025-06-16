@@ -3,12 +3,13 @@ import { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useBudget } from '@/contexts/BudgetContext';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { LogOut, User, Plus, Edit, Trash2, Search, Filter } from 'lucide-react';
+import { LogOut, User, Plus } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
+import ExpensesSummaryCard from '@/components/ExpensesSummaryCard';
+import ExpenseFilters from '@/components/ExpenseFilters';
+import ExpenseForm from '@/components/ExpenseForm';
+import ExpensesList from '@/components/ExpensesList';
 
 interface Expense {
   id: string;
@@ -121,8 +122,6 @@ const Expenses = () => {
     return matchesSearch && matchesCategory;
   });
 
-  const totalExpenses = expenses.reduce((sum, expense) => sum + expense.amount, 0);
-
   const getCategoryName = (categoryId: string) => {
     return currentBudget.categories.find(cat => cat.id === categoryId)?.name || 'Sin categoría';
   };
@@ -166,68 +165,16 @@ const Expenses = () => {
         </div>
 
         {/* Summary Card */}
-        <Card className="mb-8">
-          <CardHeader>
-            <CardTitle className="text-primary">Resumen de Gastos</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div>
-                <p className="text-sm text-budget-gray-600">Total Gastado</p>
-                <p className="text-2xl font-bold text-budget-danger">€{totalExpenses.toFixed(2)}</p>
-              </div>
-              <div>
-                <p className="text-sm text-budget-gray-600">Número de Gastos</p>
-                <p className="text-2xl font-bold text-primary">{expenses.length}</p>
-              </div>
-              <div>
-                <p className="text-sm text-budget-gray-600">Promedio por Gasto</p>
-                <p className="text-2xl font-bold text-budget-gray-700">
-                  €{expenses.length > 0 ? (totalExpenses / expenses.length).toFixed(2) : '0.00'}
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        <ExpensesSummaryCard expenses={expenses} />
 
         {/* Search and Filter Controls */}
-        <Card className="mb-6">
-          <CardContent className="pt-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="md:col-span-2">
-                <Label htmlFor="search">Buscar gastos</Label>
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-budget-gray-400 h-4 w-4" />
-                  <Input
-                    id="search"
-                    type="text"
-                    placeholder="Buscar por descripción..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-10"
-                  />
-                </div>
-              </div>
-              <div>
-                <Label htmlFor="categoryFilter">Filtrar por categoría</Label>
-                <div className="relative">
-                  <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-budget-gray-400 h-4 w-4" />
-                  <select
-                    id="categoryFilter"
-                    value={selectedCategory}
-                    onChange={(e) => setSelectedCategory(e.target.value)}
-                    className="flex h-10 w-full rounded-md border border-input bg-background pl-10 pr-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                  >
-                    <option value="">Todas las categorías</option>
-                    {currentBudget.categories.map(category => (
-                      <option key={category.id} value={category.id}>{category.name}</option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        <ExpenseFilters
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          selectedCategory={selectedCategory}
+          setSelectedCategory={setSelectedCategory}
+          categories={currentBudget.categories}
+        />
 
         {/* Add Expense Button */}
         <div className="mb-6">
@@ -242,134 +189,24 @@ const Expenses = () => {
 
         {/* Add/Edit Expense Form */}
         {showAddForm && (
-          <Card className="mb-8">
-            <CardHeader>
-              <CardTitle>{editingExpense ? 'Editar Gasto' : 'Nuevo Gasto'}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <form onSubmit={editingExpense ? handleUpdateExpense : handleAddExpense} className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="description">Descripción</Label>
-                    <Input
-                      id="description"
-                      type="text"
-                      value={newExpense.description}
-                      onChange={(e) => setNewExpense({ ...newExpense, description: e.target.value })}
-                      placeholder="Ej: Almuerzo en restaurante"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="amount">Cantidad (€)</Label>
-                    <Input
-                      id="amount"
-                      type="number"
-                      step="0.01"
-                      value={newExpense.amount}
-                      onChange={(e) => setNewExpense({ ...newExpense, amount: e.target.value })}
-                      placeholder="15.50"
-                      required
-                    />
-                  </div>
-                </div>
-                <div>
-                  <Label htmlFor="category">Categoría</Label>
-                  <select
-                    id="category"
-                    value={newExpense.categoryId}
-                    onChange={(e) => setNewExpense({ ...newExpense, categoryId: e.target.value })}
-                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                  >
-                    {currentBudget.categories.map(category => (
-                      <option key={category.id} value={category.id}>{category.name}</option>
-                    ))}
-                  </select>
-                </div>
-                <div className="flex space-x-2">
-                  <Button type="submit">
-                    {editingExpense ? 'Actualizar Gasto' : 'Guardar Gasto'}
-                  </Button>
-                  <Button type="button" variant="outline" onClick={handleCancelEdit}>
-                    Cancelar
-                  </Button>
-                </div>
-              </form>
-            </CardContent>
-          </Card>
+          <ExpenseForm
+            editingExpense={editingExpense}
+            newExpense={newExpense}
+            setNewExpense={setNewExpense}
+            categories={currentBudget.categories}
+            onSubmit={editingExpense ? handleUpdateExpense : handleAddExpense}
+            onCancel={handleCancelEdit}
+          />
         )}
 
         {/* Expenses List */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Lista de Gastos</CardTitle>
-            {filteredExpenses.length !== expenses.length && (
-              <p className="text-sm text-budget-gray-600">
-                Mostrando {filteredExpenses.length} de {expenses.length} gastos
-              </p>
-            )}
-          </CardHeader>
-          <CardContent>
-            {filteredExpenses.length === 0 ? (
-              <div className="text-center py-8">
-                <p className="text-budget-gray-600">
-                  {expenses.length === 0 
-                    ? 'No hay gastos registrados aún.' 
-                    : 'No se encontraron gastos que coincidan con los filtros.'
-                  }
-                </p>
-                <p className="text-sm text-budget-gray-500 mt-2">
-                  {expenses.length === 0 
-                    ? 'Añade tu primer gasto usando el botón de arriba.'
-                    : 'Intenta ajustar los filtros de búsqueda.'
-                  }
-                </p>
-              </div>
-            ) : (
-              <div className="space-y-4">
-                {filteredExpenses.map((expense) => (
-                  <div
-                    key={expense.id}
-                    className="flex items-center justify-between p-4 border border-budget-gray-200 rounded-lg hover:bg-budget-gray-50 transition-colors"
-                  >
-                    <div className="flex-1">
-                      <h4 className="font-semibold text-primary">{expense.description}</h4>
-                      <div className="flex items-center space-x-4 mt-1">
-                        <span className="text-sm text-budget-gray-600">
-                          {getCategoryName(expense.categoryId)}
-                        </span>
-                        <span className="text-sm text-budget-gray-600">{expense.date}</span>
-                      </div>
-                    </div>
-                    <div className="flex items-center space-x-4">
-                      <span className="text-lg font-bold text-budget-danger">
-                        €{expense.amount.toFixed(2)}
-                      </span>
-                      <div className="flex space-x-2">
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => handleEditExpense(expense)}
-                          className="text-blue-600 hover:text-blue-700"
-                        >
-                          <Edit className="h-4 w-4" />
-                        </Button>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => handleDeleteExpense(expense.id)}
-                          className="text-red-600 hover:text-red-700"
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </CardContent>
-        </Card>
+        <ExpensesList
+          expenses={expenses}
+          filteredExpenses={filteredExpenses}
+          getCategoryName={getCategoryName}
+          onEditExpense={handleEditExpense}
+          onDeleteExpense={handleDeleteExpense}
+        />
       </main>
     </div>
   );
