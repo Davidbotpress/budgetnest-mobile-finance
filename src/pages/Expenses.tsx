@@ -1,11 +1,9 @@
-
 import { useState } from 'react';
-import { useAuth } from '@/contexts/AuthContext';
 import { useBudget } from '@/contexts/BudgetContext';
 import { Button } from '@/components/ui/button';
-import { LogOut, User, Plus } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { Plus } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { AppLayout } from '@/components/layout/AppLayout';
 import ExpensesSummaryCard from '@/components/ExpensesSummaryCard';
 import ExpenseFilters from '@/components/ExpenseFilters';
 import ExpenseForm from '@/components/ExpenseForm';
@@ -20,10 +18,8 @@ interface Expense {
 }
 
 const Expenses = () => {
-  const { user, logout } = useAuth();
   const { currentBudget, addExpenseToCategory } = useBudget();
   const { toast } = useToast();
-  const navigate = useNavigate();
   
   const [expenses, setExpenses] = useState<Expense[]>([]);
   const [showAddForm, setShowAddForm] = useState(false);
@@ -35,11 +31,6 @@ const Expenses = () => {
     amount: '',
     categoryId: currentBudget.categories[0]?.id || '',
   });
-
-  const handleLogout = () => {
-    logout();
-    navigate('/');
-  };
 
   const handleAddExpense = (e: React.FormEvent) => {
     e.preventDefault();
@@ -127,88 +118,63 @@ const Expenses = () => {
   };
 
   return (
-    <div className="min-h-screen bg-budget-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b border-budget-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <h1 className="text-2xl font-bold text-gradient cursor-pointer" onClick={() => navigate('/dashboard')}>
-              BudgetNest
-            </h1>
-            
-            <div className="flex items-center space-x-4">
-              <div className="flex items-center space-x-2">
-                <User className="h-5 w-5 text-budget-gray-600" />
-                <span className="text-budget-gray-700">{user?.name}</span>
-              </div>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleLogout}
-                className="flex items-center space-x-2"
-              >
-                <LogOut className="h-4 w-4" />
-                <span>Cerrar Sesión</span>
-              </Button>
-            </div>
+    <AppLayout title="Registro de Gastos">
+      <div className="bg-budget-gray-50 min-h-full">
+        {/* Main Content */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="mb-8">
+            <h2 className="text-3xl font-bold text-primary mb-2">Registro de Gastos</h2>
+            <p className="text-budget-gray-600">
+              Registra y gestiona todos tus gastos en un solo lugar.
+            </p>
           </div>
-        </div>
-      </header>
 
-      {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <h2 className="text-3xl font-bold text-primary mb-2">Registro de Gastos</h2>
-          <p className="text-budget-gray-600">
-            Registra y gestiona todos tus gastos en un solo lugar.
-          </p>
-        </div>
+          {/* Summary Card */}
+          <ExpensesSummaryCard expenses={expenses} />
 
-        {/* Summary Card */}
-        <ExpensesSummaryCard expenses={expenses} />
-
-        {/* Search and Filter Controls */}
-        <ExpenseFilters
-          searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
-          selectedCategory={selectedCategory}
-          setSelectedCategory={setSelectedCategory}
-          categories={currentBudget.categories}
-        />
-
-        {/* Add Expense Button */}
-        <div className="mb-6">
-          <Button
-            onClick={() => setShowAddForm(!showAddForm)}
-            className="flex items-center space-x-2"
-          >
-            <Plus className="h-4 w-4" />
-            <span>Añadir Gasto</span>
-          </Button>
-        </div>
-
-        {/* Add/Edit Expense Form */}
-        {showAddForm && (
-          <ExpenseForm
-            editingExpense={editingExpense}
-            newExpense={newExpense}
-            setNewExpense={setNewExpense}
+          {/* Search and Filter Controls */}
+          <ExpenseFilters
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+            selectedCategory={selectedCategory}
+            setSelectedCategory={setSelectedCategory}
             categories={currentBudget.categories}
-            onSubmit={editingExpense ? handleUpdateExpense : handleAddExpense}
-            onCancel={handleCancelEdit}
           />
-        )}
 
-        {/* Expenses List */}
-        <ExpensesList
-          expenses={expenses}
-          filteredExpenses={filteredExpenses}
-          getCategoryName={getCategoryName}
-          onEditExpense={handleEditExpense}
-          onDeleteExpense={handleDeleteExpense}
-        />
-      </main>
-    </div>
+          {/* Add Expense Button */}
+          <div className="mb-6">
+            <Button
+              onClick={() => setShowAddForm(!showAddForm)}
+              className="flex items-center space-x-2"
+            >
+              <Plus className="h-4 w-4" />
+              <span>Añadir Gasto</span>
+            </Button>
+          </div>
+
+          {/* Add/Edit Expense Form */}
+          {showAddForm && (
+            <ExpenseForm
+              editingExpense={editingExpense}
+              newExpense={newExpense}
+              setNewExpense={setNewExpense}
+              categories={currentBudget.categories}
+              onSubmit={editingExpense ? handleUpdateExpense : handleAddExpense}
+              onCancel={handleCancelEdit}
+            />
+          )}
+
+          {/* Expenses List */}
+          <ExpensesList
+            expenses={expenses}
+            filteredExpenses={filteredExpenses}
+            getCategoryName={getCategoryName}
+            onEditExpense={handleEditExpense}
+            onDeleteExpense={handleDeleteExpense}
+          />
+        </div>
+      </div>
+    </AppLayout>
   );
 };
 
