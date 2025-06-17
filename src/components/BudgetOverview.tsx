@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { useBudget } from '@/contexts/BudgetContext';
@@ -44,7 +43,7 @@ const BudgetOverview = ({
           
           <div className="text-center p-4 bg-budget-gray-50 rounded-lg">
             <p className="text-xs md:text-sm text-budget-gray-600 mb-2 font-medium">Total Gastado</p>
-            <p className={`text-2xl md:text-3xl font-bold ${spentColor}`}>
+            <p className="text-2xl md:text-3xl font-bold text-red-600">
               <span className="text-red-600">€</span>{totalSpent.toFixed(2)}
             </p>
             
