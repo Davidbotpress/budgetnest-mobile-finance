@@ -1,3 +1,4 @@
+
 import { useBudget } from '@/contexts/BudgetContext';
 import { Button } from '@/components/ui/button';
 import { BarChart3, Target, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -52,28 +53,11 @@ const Dashboard = () => {
     }
   };
 
-  const navigationItems = [{
-    title: 'Gastos',
-    description: 'Registrar y gestionar gastos',
-    path: '/expenses',
-    icon: BarChart3
-  }, {
-    title: 'Estadísticas',
-    description: 'Ver análisis y tendencias',
-    path: '/statistics',
-    icon: BarChart3
-  }, {
-    title: 'Bienvenida',
-    description: 'Volver a la página de bienvenida',
-    path: '/welcome',
-    icon: Target
-  }];
-
   if (isLoading) {
     return (
       <AppLayout title="Panel">
         <div className="flex items-center justify-center min-h-[400px]">
-          <Loading size="lg" text="Cargando dashboard..." />
+          <Loading size="lg" text="Cargando panel de control..." />
         </div>
       </AppLayout>
     );
@@ -83,29 +67,29 @@ const Dashboard = () => {
     <AppLayout title="Panel">
       <div className="bg-budget-gray-50 min-h-full">
         {/* Month Navigation Header */}
-        <div className="bg-white border-b border-budget-gray-200 px-4 sm:px-6 lg:px-8 py-4">
+        <div className="bg-white border-b border-budget-gray-200 px-4 sm:px-6 lg:px-8 py-4 shadow-sm">
           <div className="max-w-7xl mx-auto flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <h1 className="text-xl md:text-2xl font-bold text-primary">Panel</h1>
-              <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-3 md:space-x-4">
+              <h1 className="text-xl md:text-2xl font-bold text-primary">Panel de Control</h1>
+              <div className="flex items-center space-x-1 md:space-x-2 bg-budget-gray-50 rounded-lg p-1">
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={handlePreviousMonth}
-                  className="p-1 h-8 w-8"
+                  className="p-1 h-7 w-7 md:h-8 md:w-8 hover:bg-white hover:shadow-sm transition-all"
                 >
-                  <ChevronLeft className="h-4 w-4" />
+                  <ChevronLeft className="h-3 w-3 md:h-4 md:w-4" />
                 </Button>
-                <span className="text-lg font-medium text-budget-gray-700 min-w-[120px] text-center">
+                <span className="text-sm md:text-lg font-semibold text-budget-gray-700 min-w-[100px] md:min-w-[120px] text-center px-2">
                   {currentMonth} {currentYear}
                 </span>
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={handleNextMonth}
-                  className="p-1 h-8 w-8"
+                  className="p-1 h-7 w-7 md:h-8 md:w-8 hover:bg-white hover:shadow-sm transition-all"
                 >
-                  <ChevronRight className="h-4 w-4" />
+                  <ChevronRight className="h-3 w-3 md:h-4 md:w-4" />
                 </Button>
               </div>
             </div>
@@ -115,11 +99,11 @@ const Dashboard = () => {
         {/* Main Content */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-8">
           <div className="mb-6 md:mb-8">
-            <h2 className="text-2xl md:text-3xl font-bold text-primary mb-2">
-              ¡Bienvenido, {user?.name}!
+            <h2 className="text-xl md:text-3xl font-bold text-primary mb-2">
+              ¡Bienvenido de nuevo, {user?.name}!
             </h2>
             <p className="text-sm md:text-base text-budget-gray-600">
-              Aquí puedes gestionar tu presupuesto y controlar tus gastos.
+              Aquí puedes gestionar tu presupuesto mensual y controlar tus gastos de forma inteligente.
             </p>
           </div>
 
@@ -132,10 +116,15 @@ const Dashboard = () => {
 
           {/* Category Cards */}
           <div className="mb-6 md:mb-8">
-            <h3 className="text-lg md:text-xl font-semibold text-primary mb-4">
-              Distribución de Gastos
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+            <div className="flex items-center justify-between mb-4 md:mb-6">
+              <h3 className="text-lg md:text-xl font-semibold text-primary">
+                Distribución de Gastos por Categoría
+              </h3>
+              <span className="text-xs md:text-sm text-budget-gray-500 font-medium">
+                {currentBudget?.categories?.length || 0} categorías
+              </span>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-4 lg:gap-6">
               {currentBudget?.categories?.map(category => (
                 <ErrorBoundary key={category.id} fallback={
                   <div className="p-4 border border-red-200 rounded-lg bg-red-50">
@@ -146,7 +135,7 @@ const Dashboard = () => {
                 </ErrorBoundary>
               )) || (
                 <div className="col-span-full">
-                  <ErrorMessage message="No hay categorías disponibles" />
+                  <ErrorMessage message="No hay categorías disponibles para mostrar" />
                 </div>
               )}
             </div>
