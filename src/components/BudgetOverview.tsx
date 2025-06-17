@@ -46,10 +46,7 @@ const BudgetOverview = ({
             <p className={`text-2xl md:text-3xl font-bold ${spentColor}`}>
               €{totalSpent.toFixed(2)}
             </p>
-            <div className="flex items-center justify-center mt-2">
-              {isOverBudget ? <TrendingUp className={`h-3 w-3 md:h-4 md:w-4 ${trendIconColor} mr-1`} /> : <TrendingDown className={`h-3 w-3 md:h-4 md:w-4 ${trendIconColor} mr-1`} />}
-              
-            </div>
+            
           </div>
           
           <div className="text-center p-4 bg-budget-gray-50 rounded-lg">
