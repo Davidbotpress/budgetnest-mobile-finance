@@ -25,9 +25,7 @@ const Navigation = () => {
                 </Button>
               </Link>
               <Link to="/auth">
-                <Button className="bg-primary hover:bg-primary/90 text-white">
-                  Comenzar
-                </Button>
+                
               </Link>
             </div>
           </div>
