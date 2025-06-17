@@ -1,4 +1,3 @@
-
 import { useBudget } from '@/contexts/BudgetContext';
 import { Button } from '@/components/ui/button';
 import { BarChart3, Target, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -134,7 +133,7 @@ const Dashboard = () => {
           {/* Category Cards */}
           <div className="mb-6 md:mb-8">
             <h3 className="text-lg md:text-xl font-semibold text-primary mb-4">
-              Categorías de Gastos
+              Distribución de Gastos
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
               {currentBudget?.categories?.map(category => (
