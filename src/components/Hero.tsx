@@ -1,11 +1,8 @@
-
 import { Button } from '@/components/ui/button';
 import { ArrowDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
-
 const Hero = () => {
-  return (
-    <section className="pt-20 pb-16 px-4 sm:px-6 lg:px-8">
+  return <section className="pt-20 pb-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <div className="text-center">
           <div className="animate-fade-in">
@@ -20,20 +17,22 @@ const Hero = () => {
             </p>
           </div>
           
-          <div className="animate-slide-up" style={{ animationDelay: "0.2s" }}>
+          <div className="animate-slide-up" style={{
+          animationDelay: "0.2s"
+        }}>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
               <Link to="/auth">
                 <Button size="lg" className="bg-primary hover:bg-primary/90 text-white px-8 py-4 text-lg">
                   Comenzar Gratis
                 </Button>
               </Link>
-              <Button variant="outline" size="lg" className="border-primary text-primary hover:bg-primary hover:text-white px-8 py-4 text-lg">
-                Ver Demo
-              </Button>
+              
             </div>
           </div>
 
-          <div className="animate-slide-up" style={{ animationDelay: "0.4s" }}>
+          <div className="animate-slide-up" style={{
+          animationDelay: "0.4s"
+        }}>
             <div className="inline-flex items-center space-x-2 text-budget-gray-500 text-sm">
               <span>Desplázate para explorar funciones</span>
               <ArrowDown className="h-4 w-4 animate-bounce" />
@@ -41,8 +40,6 @@ const Hero = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default Hero;
