@@ -1,14 +1,10 @@
-
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Menu, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
-
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100">
+  return <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
@@ -21,9 +17,7 @@ const Navigation = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:block">
             <div className="ml-10 flex items-center space-x-4">
-              <Button variant="ghost" className="text-budget-gray-600 hover:text-primary">
-                Funciones
-              </Button>
+              
               <Button variant="ghost" className="text-budget-gray-600 hover:text-primary">
                 Acerca de
               </Button>
@@ -42,12 +36,7 @@ const Navigation = () => {
 
           {/* Mobile menu button */}
           <div className="md:hidden">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-primary"
-            >
+            <Button variant="ghost" size="sm" onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-primary">
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </Button>
           </div>
@@ -55,8 +44,7 @@ const Navigation = () => {
       </div>
 
       {/* Mobile Navigation */}
-      {isMenuOpen && (
-        <div className="md:hidden">
+      {isMenuOpen && <div className="md:hidden">
           <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-gray-100">
             <Button variant="ghost" className="w-full justify-start text-budget-gray-600 hover:text-primary">
               Funciones
@@ -77,10 +65,7 @@ const Navigation = () => {
               </Link>
             </div>
           </div>
-        </div>
-      )}
-    </nav>
-  );
+        </div>}
+    </nav>;
 };
-
 export default Navigation;
