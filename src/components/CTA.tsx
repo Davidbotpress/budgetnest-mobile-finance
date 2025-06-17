@@ -1,10 +1,7 @@
-
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-
 const CTA = () => {
-  return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8">
+  return <section className="py-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
         <div className="gradient-bg rounded-3xl p-8 sm:p-12 text-center text-white">
           <h2 className="text-3xl sm:text-4xl font-bold mb-4">
@@ -19,17 +16,13 @@ const CTA = () => {
                 Comenzar Gratis
               </Button>
             </Link>
-            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-primary px-8 py-4 text-lg">
-              Saber Más
-            </Button>
+            
           </div>
           <p className="text-sm mt-4 opacity-75">
             No se requiere tarjeta de crédito • Plan gratuito disponible para siempre
           </p>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default CTA;
