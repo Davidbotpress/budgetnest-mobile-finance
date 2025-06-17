@@ -1,4 +1,3 @@
-
 import { useBudget } from '@/contexts/BudgetContext';
 import { Button } from '@/components/ui/button';
 import { BarChart3, Target, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -11,6 +10,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { ErrorBoundary, ErrorMessage } from '@/components/ui/error-boundary';
 import { useState, useEffect } from 'react';
 import { Loading } from '@/components/ui/loading';
+import { SidebarTrigger } from '@/components/ui/sidebar';
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -70,7 +70,10 @@ const Dashboard = () => {
         <div className="bg-white border-b border-budget-gray-200 px-4 sm:px-6 lg:px-8 py-4 shadow-sm">
           <div className="max-w-7xl mx-auto flex items-center justify-between">
             <div className="flex items-center space-x-3 md:space-x-4">
-              <h1 className="text-xl md:text-2xl font-bold text-primary">Panel de Control</h1>
+              <div className="flex items-center space-x-2">
+                <SidebarTrigger className="md:hidden" />
+                <h1 className="text-xl md:text-2xl font-bold text-primary">Panel de Control</h1>
+              </div>
               <div className="flex items-center space-x-1 md:space-x-2 bg-budget-gray-50 rounded-lg p-1">
                 <Button
                   variant="ghost"
