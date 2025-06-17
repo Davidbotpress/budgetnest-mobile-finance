@@ -18,9 +18,7 @@ const Navigation = () => {
           <div className="hidden md:block">
             <div className="ml-10 flex items-center space-x-4">
               
-              <Button variant="ghost" className="text-budget-gray-600 hover:text-primary">
-                Acerca de
-              </Button>
+              
               <Link to="/auth">
                 <Button variant="outline" className="border-primary text-primary hover:bg-primary hover:text-white">
                   Iniciar Sesión
