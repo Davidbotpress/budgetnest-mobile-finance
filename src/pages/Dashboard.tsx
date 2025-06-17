@@ -1,3 +1,4 @@
+
 import { useBudget } from '@/contexts/BudgetContext';
 import { Button } from '@/components/ui/button';
 import { BarChart3, Target, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -126,7 +127,7 @@ const Dashboard = () => {
           {/* Budget Overview */}
           <div className="mb-6 md:mb-8">
             <ErrorBoundary fallback={<ErrorMessage message="Error al cargar el resumen del presupuesto" />}>
-              <BudgetOverview />
+              <BudgetOverview selectedMonth={currentMonth} selectedYear={currentYear} />
             </ErrorBoundary>
           </div>
 

@@ -4,7 +4,12 @@ import { Progress } from '@/components/ui/progress';
 import { useBudget } from '@/contexts/BudgetContext';
 import { TrendingUp, TrendingDown, DollarSign } from 'lucide-react';
 
-const BudgetOverview = () => {
+interface BudgetOverviewProps {
+  selectedMonth?: string;
+  selectedYear?: number;
+}
+
+const BudgetOverview = ({ selectedMonth, selectedYear }: BudgetOverviewProps) => {
   const { currentBudget } = useBudget();
   
   const totalSpent = currentBudget.categories.reduce((sum, cat) => sum + cat.spentAmount, 0);
@@ -12,12 +17,16 @@ const BudgetOverview = () => {
   const spentPercentage = (totalSpent / currentBudget.totalBudget) * 100;
   const isOverBudget = totalSpent > currentBudget.totalBudget;
 
+  // Use the selected month/year if provided, otherwise fall back to currentBudget values
+  const displayMonth = selectedMonth || currentBudget.month;
+  const displayYear = selectedYear || currentBudget.year;
+
   return (
     <Card className="col-span-full">
       <CardHeader>
         <CardTitle className="flex items-center space-x-2">
           <DollarSign className="h-6 w-6 text-primary" />
-          <span>Resumen Presupuesto - {currentBudget.month} {currentBudget.year}</span>
+          <span>Resumen Presupuesto - {displayMonth} {displayYear}</span>
         </CardTitle>
       </CardHeader>
       <CardContent>
