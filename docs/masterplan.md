@@ -45,4 +45,4 @@ AI integration: Scope and limit features to manageable MVP additions
 Future Expansion PossibilitiesMulti-currency support
 Language localization for other markets
 Community savings challenges
-Mobile app version (PWA or native)
+Mobile app version (PWA or native).
