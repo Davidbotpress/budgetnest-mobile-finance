@@ -1,24 +1,29 @@
 import { useBudget } from '@/contexts/BudgetContext';
 import { Button } from '@/components/ui/button';
-import { BarChart3, Target, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Edit, DollarSign } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { AppLayout } from '@/components/layout/AppLayout';
 import BudgetOverview from '@/components/BudgetOverview';
-import CategoryCard from '@/components/CategoryCard';
-import QuickAddExpense from '@/components/QuickAddExpense';
+import BudgetEditModal from '@/components/BudgetEditModal';
+import ExpensesByCategory from '@/components/ExpensesByCategory';
 import { useAuth } from '@/contexts/AuthContext';
 import { ErrorBoundary, ErrorMessage } from '@/components/ui/error-boundary';
 import { useState, useEffect } from 'react';
 import { Loading } from '@/components/ui/loading';
 import { SidebarTrigger } from '@/components/ui/sidebar';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 const Dashboard = () => {
   const { user } = useAuth();
-  const { currentBudget } = useBudget();
+  const { 
+    currentBudget, 
+    currentMonth, 
+    currentYear, 
+    setCurrentMonth 
+  } = useBudget();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
-  const [currentMonth, setCurrentMonth] = useState('Diciembre');
-  const [currentYear, setCurrentYear] = useState(2024);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const months = [
     'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
@@ -36,35 +41,37 @@ const Dashboard = () => {
   const handlePreviousMonth = () => {
     const currentIndex = months.indexOf(currentMonth);
     if (currentIndex > 0) {
-      setCurrentMonth(months[currentIndex - 1]);
+      setCurrentMonth(months[currentIndex - 1], currentYear);
     } else {
-      setCurrentMonth(months[11]);
-      setCurrentYear(currentYear - 1);
+      setCurrentMonth(months[11], currentYear - 1);
     }
   };
 
   const handleNextMonth = () => {
     const currentIndex = months.indexOf(currentMonth);
     if (currentIndex < 11) {
-      setCurrentMonth(months[currentIndex + 1]);
+      setCurrentMonth(months[currentIndex + 1], currentYear);
     } else {
-      setCurrentMonth(months[0]);
-      setCurrentYear(currentYear + 1);
+      setCurrentMonth(months[0], currentYear + 1);
     }
+  };
+
+  const handleEditBudget = () => {
+    setIsEditModalOpen(true);
   };
 
   if (isLoading) {
     return (
-      <AppLayout title="Panel">
+      <AppLayout title="Panel Central">
         <div className="flex items-center justify-center min-h-[400px]">
-          <Loading size="lg" text="Cargando panel de control..." />
+          <Loading size="lg" text="Cargando panel central..." />
         </div>
       </AppLayout>
     );
   }
 
   return (
-    <AppLayout title="Panel">
+    <AppLayout title="Panel Central">
       <div className="bg-budget-gray-50 min-h-full">
         {/* Month Navigation Header */}
         <div className="bg-white border-b border-budget-gray-200 px-4 sm:px-6 lg:px-8 py-4 shadow-sm">
@@ -72,7 +79,7 @@ const Dashboard = () => {
             <div className="flex items-center space-x-3 md:space-x-4">
               <div className="flex items-center space-x-2">
                 <SidebarTrigger className="md:hidden" />
-                <h1 className="text-xl md:text-2xl font-bold text-primary">Panel de Control</h1>
+                <h1 className="text-xl md:text-2xl font-bold text-primary">Panel Central</h1>
               </div>
               <div className="flex items-center space-x-1 md:space-x-2 bg-budget-gray-50 rounded-lg p-1">
                 <Button
@@ -106,49 +113,73 @@ const Dashboard = () => {
               ¡Bienvenido de nuevo, {user?.name}!
             </h2>
             <p className="text-sm md:text-base text-budget-gray-600">
-              Aquí puedes gestionar tu presupuesto mensual y controlar tus gastos de forma inteligente.
+              Gestiona tu presupuesto mensual y controla tus gastos de forma inteligente.
             </p>
           </div>
 
-          {/* Budget Overview */}
+          {/* Budget Overview with Edit Button */}
           <div className="mb-6 md:mb-8">
             <ErrorBoundary fallback={<ErrorMessage message="Error al cargar el resumen del presupuesto" />}>
-              <BudgetOverview selectedMonth={currentMonth} selectedYear={currentYear} />
+              <div className="relative">
+                <BudgetOverview selectedMonth={currentMonth} selectedYear={currentYear} />
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleEditBudget}
+                  className="absolute top-4 right-4 flex items-center space-x-1"
+                >
+                  <Edit className="h-4 w-4" />
+                  <span className="hidden sm:inline">Editar</span>
+                </Button>
+              </div>
             </ErrorBoundary>
           </div>
 
-          {/* Category Cards */}
+          {/* Expenses by Category */}
           <div className="mb-6 md:mb-8">
-            <div className="flex items-center justify-between mb-4 md:mb-6">
-              <h3 className="text-lg md:text-xl font-semibold text-primary">
-                Distribución de Gastos por Categoría
-              </h3>
-              <span className="text-xs md:text-sm text-budget-gray-500 font-medium">
-                {currentBudget?.categories?.length || 0} categorías
-              </span>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-4 lg:gap-6">
-              {currentBudget?.categories?.map(category => (
-                <ErrorBoundary key={category.id} fallback={
-                  <div className="p-4 border border-red-200 rounded-lg bg-red-50">
-                    <p className="text-sm text-red-600">Error al cargar categoría</p>
-                  </div>
-                }>
-                  <CategoryCard category={category} />
-                </ErrorBoundary>
-              )) || (
-                <div className="col-span-full">
-                  <ErrorMessage message="No hay categorías disponibles para mostrar" />
+            <ErrorBoundary fallback={<ErrorMessage message="Error al cargar los gastos por categoría" />}>
+              <ExpensesByCategory month={currentMonth} year={currentYear} />
+            </ErrorBoundary>
+          </div>
+
+          {/* Quick Actions Card */}
+          <div className="mb-6 md:mb-8">
+            <Card className="shadow-sm">
+              <CardHeader>
+                <CardTitle className="flex items-center space-x-2 text-lg">
+                  <DollarSign className="h-5 w-5 text-primary" />
+                  <span>Acciones Rápidas</span>
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <Button 
+                    onClick={() => navigate('/expenses')}
+                    className="w-full justify-start"
+                    variant="outline"
+                  >
+                    Ver Todos los Gastos
+                  </Button>
+                  <Button 
+                    onClick={() => navigate('/statistics')}
+                    className="w-full justify-start"
+                    variant="outline"
+                  >
+                    Ver Estadísticas
+                  </Button>
                 </div>
-              )}
-            </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
 
-        {/* Quick Add Expense Button */}
-        <ErrorBoundary fallback={null}>
-          <QuickAddExpense />
-        </ErrorBoundary>
+        {/* Budget Edit Modal */}
+        <BudgetEditModal
+          isOpen={isEditModalOpen}
+          onClose={() => setIsEditModalOpen(false)}
+          month={currentMonth}
+          year={currentYear}
+        />
       </div>
     </AppLayout>
   );

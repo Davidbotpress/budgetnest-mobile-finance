@@ -2,20 +2,21 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { useBudget } from '@/contexts/BudgetContext';
 import { TrendingUp, TrendingDown, DollarSign } from 'lucide-react';
+
 interface BudgetOverviewProps {
   selectedMonth?: string;
   selectedYear?: number;
 }
+
 const BudgetOverview = ({
   selectedMonth,
   selectedYear
 }: BudgetOverviewProps) => {
-  const {
-    currentBudget
-  } = useBudget();
+  const { currentBudget } = useBudget();
+  
   const totalSpent = currentBudget.categories.reduce((sum, cat) => sum + cat.spentAmount, 0);
   const totalRemaining = currentBudget.totalBudget - totalSpent;
-  const spentPercentage = totalSpent / currentBudget.totalBudget * 100;
+  const spentPercentage = currentBudget.totalBudget > 0 ? (totalSpent / currentBudget.totalBudget) * 100 : 0;
   const isOverBudget = totalSpent > currentBudget.totalBudget;
 
   // Use the selected month/year if provided, otherwise fall back to currentBudget values
@@ -27,7 +28,9 @@ const BudgetOverview = ({
   const remainingColor = totalRemaining >= 0 ? 'text-green-600' : 'text-red-600';
   const progressColor = isOverBudget ? '[&>div]:bg-red-500' : '[&>div]:bg-green-500';
   const trendIconColor = isOverBudget ? 'text-red-600' : 'text-green-600';
-  return <Card className="col-span-full shadow-sm hover:shadow-md transition-shadow">
+
+  return (
+    <Card className="col-span-full shadow-sm hover:shadow-md transition-shadow">
       <CardHeader className="pb-4">
         <CardTitle className="flex items-center space-x-2 text-lg md:text-xl">
           <DollarSign className="h-5 w-5 md:h-6 md:w-6 text-primary" />
@@ -38,7 +41,9 @@ const BudgetOverview = ({
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
           <div className="text-center p-4 bg-budget-gray-50 rounded-lg">
             <p className="text-xs md:text-sm text-budget-gray-600 mb-2 font-medium">Presupuesto Total</p>
-            <p className="text-2xl md:text-3xl font-bold text-primary"><span className="text-red-600">€</span>{currentBudget.totalBudget.toFixed(2)}</p>
+            <p className="text-2xl md:text-3xl font-bold text-primary">
+              <span className="text-red-600">€</span>{currentBudget.totalBudget.toFixed(2)}
+            </p>
           </div>
           
           <div className="text-center p-4 bg-budget-gray-50 rounded-lg">
@@ -46,7 +51,6 @@ const BudgetOverview = ({
             <p className="text-2xl md:text-3xl font-bold text-red-600">
               <span className="text-red-600">€</span>{totalSpent.toFixed(2)}
             </p>
-            
           </div>
           
           <div className="text-center p-4 bg-budget-gray-50 rounded-lg">
@@ -65,11 +69,15 @@ const BudgetOverview = ({
             <span className={`font-bold ${spentColor}`}>{spentPercentage.toFixed(1)}%</span>
           </div>
           <Progress value={Math.min(spentPercentage, 100)} className={`h-3 md:h-4 ${progressColor}`} />
-          {isOverBudget && <p className="text-xs md:text-sm text-red-600 text-center font-medium">
+          {isOverBudget && (
+            <p className="text-xs md:text-sm text-red-600 text-center font-medium">
               Has excedido tu presupuesto mensual
-            </p>}
+            </p>
+          )}
         </div>
       </CardContent>
-    </Card>;
+    </Card>
+  );
 };
+
 export default BudgetOverview;
