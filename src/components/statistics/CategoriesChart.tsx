@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ChartContainer, ChartTooltip } from '@/components/ui/chart';
 import {
@@ -102,7 +101,7 @@ const CategoriesChart = ({ categories }: CategoriesChartProps) => {
                   <div
                     className={`h-2 rounded-full ${
                       category.percentage > 100 ? 'bg-budget-danger' :
-                      category.percentage > 80 ? 'bg-budget-warning' : 'bg-budget-success'
+                      category.percentage > 80 ? 'bg-budget-primary' : 'bg-budget-success'
                     }`}
                     style={{ width: `${Math.min(category.percentage, 100)}%` }}
                   ></div>

@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { AlertTriangle, TrendingUp } from 'lucide-react';
 import { Category } from '@/contexts/BudgetContext';
@@ -71,9 +70,9 @@ const OverspendingSection = ({ overspendingCategories }: OverspendingSectionProp
                 <li>• Busca alternativas más económicas</li>
               </ul>
             </div>
-            <div className="p-4 bg-yellow-50 rounded-lg">
-              <h4 className="font-semibold text-yellow-800 mb-2">⚠️ Ajustar Presupuesto</h4>
-              <p className="text-yellow-700 text-sm">
+            <div className="p-4 bg-primary/10 rounded-lg">
+              <h4 className="font-semibold text-primary mb-2">⚠️ Ajustar Presupuesto</h4>
+              <p className="text-primary text-sm">
                 Si estos excesos son regulares, considera ajustar tu presupuesto mensual 
                 redistribuyendo fondos entre categorías.
               </p>

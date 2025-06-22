@@ -82,7 +82,7 @@ export const BudgetProvider: React.FC<BudgetProviderProps> = ({ children }) => {
           name: 'Transporte',
           budgetAmount: 200,
           spentAmount: 120,
-          color: 'bg-yellow-500',
+          color: 'bg-blue-900',
         },
         {
           id: 'ocio',
@@ -216,7 +216,7 @@ export const BudgetProvider: React.FC<BudgetProviderProps> = ({ children }) => {
         categories: [
           { id: 'vivienda', name: 'Vivienda', budgetAmount: 600, spentAmount: 0, color: 'bg-blue-500' },
           { id: 'alimentacion', name: 'Alimentación', budgetAmount: 400, spentAmount: 0, color: 'bg-green-500' },
-          { id: 'transporte', name: 'Transporte', budgetAmount: 200, spentAmount: 0, color: 'bg-yellow-500' },
+          { id: 'transporte', name: 'Transporte', budgetAmount: 200, spentAmount: 0, color: 'bg-blue-900' },
           { id: 'ocio', name: 'Ocio Y Entretenimiento', budgetAmount: 300, spentAmount: 0, color: 'bg-purple-500' },
           { id: 'deportes', name: 'Deportes / Salud', budgetAmount: 150, spentAmount: 0, color: 'bg-red-500' },
           { id: 'cuidado', name: 'Cuidado Personal', budgetAmount: 100, spentAmount: 0, color: 'bg-pink-500' },
