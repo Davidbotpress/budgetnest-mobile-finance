@@ -42,14 +42,14 @@ const BudgetOverview = ({
           <div className="text-center p-4 bg-budget-gray-50 rounded-lg">
             <p className="text-xs md:text-sm text-budget-gray-600 mb-2 font-medium">Presupuesto Total</p>
             <p className="text-2xl md:text-3xl font-bold text-primary">
-              <span className="text-red-600">€</span>{currentBudget.totalBudget.toFixed(2)}
+              <span className="text-black">€</span>{currentBudget.totalBudget.toFixed(2)}
             </p>
           </div>
           
           <div className="text-center p-4 bg-budget-gray-50 rounded-lg">
             <p className="text-xs md:text-sm text-budget-gray-600 mb-2 font-medium">Total Gastado</p>
             <p className="text-2xl md:text-3xl font-bold text-red-600">
-              <span className="text-red-600">€</span>{totalSpent.toFixed(2)}
+              <span className="text-black">€</span>{totalSpent.toFixed(2)}
             </p>
           </div>
           
@@ -58,7 +58,7 @@ const BudgetOverview = ({
               {totalRemaining >= 0 ? 'Disponible' : 'Excedido'}
             </p>
             <p className={`text-2xl md:text-3xl font-bold ${remainingColor}`}>
-              <span className="text-red-600">€</span>{Math.abs(totalRemaining).toFixed(2)}
+              <span className="text-black">€</span>{Math.abs(totalRemaining).toFixed(2)}
             </p>
           </div>
         </div>
