@@ -1,7 +1,6 @@
-
 import { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import LoginForm from '@/components/auth/LoginForm';
+import { SignIn2 } from '@/components/ui/clean-minimal-sign-in';
 import RegisterForm from '@/components/auth/RegisterForm';
 
 const Auth = () => {
@@ -25,7 +24,7 @@ const Auth = () => {
             </TabsList>
             
             <TabsContent value="login" className="mt-6">
-              <LoginForm />
+              <SignIn2 />
             </TabsContent>
             
             <TabsContent value="register" className="mt-6">
