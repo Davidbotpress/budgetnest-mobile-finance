@@ -72,7 +72,7 @@ export function AppSidebar() {
       </button>
 
       {isOpen && (
-        <Sidebar>
+        <Sidebar className="bg-blue-900">
           <SidebarHeader className="border-b border-budget-gray-200 flex justify-between items-center">
             <div className="flex items-center space-x-2 px-2 py-2">
               <h1 className="text-xl font-bold text-gradient">BudgetNest</h1>
