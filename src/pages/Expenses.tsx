@@ -45,7 +45,7 @@ const Expenses = () => {
       };
       
       setExpenses([expense, ...expenses]);
-      addExpenseToCategory(newExpense.categoryId, amount);
+      addExpenseToCategory(newExpense.categoryId, amount, newExpense.description, new Date().toISOString());
       
       const categoryName = currentBudget.categories.find(cat => cat.id === newExpense.categoryId)?.name;
       toast({

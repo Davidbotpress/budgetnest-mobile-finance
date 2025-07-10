@@ -31,7 +31,7 @@ const QuickAddExpense = () => {
       return;
     }
 
-    addExpenseToCategory(formData.category, amount);
+    addExpenseToCategory(formData.category, amount, formData.description || 'Gasto rápido', new Date().toISOString());
     
     const categoryName = currentBudget.categories.find(cat => cat.id === formData.category)?.name;
     
